@@ -2,6 +2,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+struct movie {
+    char name[50];
+    int year;
+    char languages[5][20];
+};
+
 int main(int argc, char *argv[]) {
     if (argc != 2) return 1;
 
