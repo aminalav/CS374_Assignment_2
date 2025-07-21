@@ -1,6 +1,9 @@
 // Author: Amin Alavi
 // Date: July 20th, 2025
-// Sources Used: 
+// Sources Used: Exploration: Arrays & Structures -> Code for structs, arrays, 
+// Sources continued: Exploration: Pointers -> referenced to properly use pointers in code
+// Sources continued: Exploration: Memory Allocation -> For dynamic memory allocation (malloc())
+// Sources continued: Exploration: Strings, Exploration: Parsing Strings
 
 #include <stdio.h>
 #include <string.h>
