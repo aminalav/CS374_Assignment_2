@@ -51,7 +51,48 @@ void showMoviesByYear(struct movieNode *head, int year) {
     }
 }
 
+void showHighestRatedByYear(struct movieNode *head) {
+    // Array for best movie node pointer for each year (index = year - 1900)
+    struct movieNode *bestByYear[2022 - 1900] = {NULL};
 
+    while (head != NULL) {
+        int index = head->data.year - 1900;
+
+        if (bestByYear[index] == NULL || head->data.rating > bestByYear[index]->data.rating) {
+            bestByYear[index] = head;
+        }
+
+        head = head->next;
+    }
+
+    // Print results
+    for (int i = 0; i < 2022 - 1900; i++) {
+        if (bestByYear[i] != NULL) {
+            printf("%d %.1f %s\n", bestByYear[i]->data.year,
+                                   bestByYear[i]->data.rating,
+                                   bestByYear[i]->data.name);
+        }
+    }
+}
+
+void showMoviesByLanguage(struct movieNode *head, const char *language) {
+    int found = 0;
+
+    while (head != NULL) {
+        for (int i = 0; i < 5; i++) {
+            if (strcmp(head->data.languages[i], language) == 0) {
+                printf("%d %s\n", head->data.year, head->data.name);
+                found = 1;
+                break;  // No need to check other languages for this movie
+            }
+        }
+        head = head->next;
+    }
+
+    if (!found) {
+        printf("No data about movies released in %s\n", language);
+    }
+}
 
 int main(int argc, char *argv[]) {
     if (argc != 2) return 1;
@@ -129,16 +170,17 @@ int main(int argc, char *argv[]) {
             int year;
             printf("Enter the year: ");
             scanf("%d", &year);
-            // TODO: Implement function to show movies by year
+            showMoviesByYear(head, year);
+
 
         } else if (inputNum == 2) {
-            // TODO: Implement function to show highest rated movie by year
+            showHighestRatedByYear(head);
 
         } else if (inputNum == 3) {
             char language[20];
             printf("Enter the language: ");
             scanf("%s", language);
-            // TODO: Implement function to show movies by language
+            showMoviesByLanguage(head, language);
 
         } else if (inputNum == 4) {
             break;
@@ -148,7 +190,7 @@ int main(int argc, char *argv[]) {
 
     } while (inputNum != 4);
 
-    // Free linked list memory
+    // Free up linked list memory
     struct movieNode *curr = head;
     while (curr != NULL) {
         struct movieNode *temp = curr;
