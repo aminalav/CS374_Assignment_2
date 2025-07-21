@@ -14,29 +14,22 @@ struct movieNode {
     struct movieNode *next;
 };
 
-// Parse a language string like "[English;French;Spanish]" into a 2D array
+// Parse a language string
+
 void parseLanguages(char *languageStr, char languages[5][20]) {
-    // Step 1: Remove the closing bracket ']'
-    languageStr[strcspn(languageStr, "]")] = '\0';
 
-    // Step 2: Find the opening bracket '[' and skip it
-    char *start = strchr(languageStr, '[');
-    if (start != NULL) {
-        start++;  // Move past the '[' character
-    } else {
-        start = languageStr;  // If '[' not found, use the original string
-    }
-
-    // Step 3: Split the language string by ';'
+    char *token = strtok(languageStr + 1, ";]");
     int i = 0;
-    char *token = strtok(start, ";");
-    while (token != NULL && i < 5) {
-        strncpy(languages[i], token, 19);    // Copy each token into the array
-        languages[i][19] = '\0';             // Ensure it's null-terminated
+
+    while(token != NULL && i < 5) {
+        strncpy(languages[i], token, 19);
+        languages[i][19] = '\0';  // null-termination
         i++;
-        token = strtok(NULL, ";");           // Get the next token
+        token = strtok(NULL, ";]");
     }
+
 }
+
 
 
 int main(int argc, char *argv[]) {
