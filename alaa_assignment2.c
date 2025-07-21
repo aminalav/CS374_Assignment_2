@@ -75,9 +75,7 @@ void displayRatingYear(struct movieNode *head) {
     // Print results
     for (int i = 0; i < 2022 - 1900; i++) {
         if (bestByYear[i] != NULL) {
-            printf("%d %.1f %s\n", bestByYear[i]->data.year,
-                                   bestByYear[i]->data.rating,
-                                   bestByYear[i]->data.name);
+            printf("%d %.1f %s\n", bestByYear[i]->data.year, bestByYear[i]->data.rating, bestByYear[i]->data.name);
         }
     }
 }
