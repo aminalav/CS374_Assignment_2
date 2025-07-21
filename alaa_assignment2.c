@@ -6,6 +6,8 @@ struct movie {
     char name[50];
     int year;
     char languages[5][20];
+    float rating;
+    struct movie *next;  //This points to the next movie, setting up linked list
 };
 
 int main(int argc, char *argv[]) {
@@ -34,8 +36,20 @@ int main(int argc, char *argv[]) {
         }
 
         printf("-----\n"); // separator between rows
+        //stdout("Professed file XYZ and parsed data for M movies")
+
     }
+    
+    int inputNum;
+
+    printf("Type a number: \n");
+
+    scanf("%d", &inputNum);
+
+    printf("Your number is: %d", inputNum);
 
     fclose(file);
+
     return 0;
 }
+
