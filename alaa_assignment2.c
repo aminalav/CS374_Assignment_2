@@ -1,3 +1,7 @@
+// Author: Amin Alavi
+// Date: July 20th, 2025
+// Sources Used: 
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -31,7 +35,7 @@ void parseLanguages(char *languageStr, char languages[5][20]) {
 
 }
 
-void showMoviesByYear(struct movieNode *head, int year) {
+void displayMoviesYear(struct movieNode *head, int year) {
     // Movies found initializa 
     int found = 0;
 
@@ -51,17 +55,17 @@ void showMoviesByYear(struct movieNode *head, int year) {
     }
 }
 
-void showHighestRatedByYear(struct movieNode *head) {
-    // Array for best movie node pointer for each year (index = year - 1900)
+void displayRatingYear(struct movieNode *head) {
+    // Array for best movie node by particular year (year range set)
     struct movieNode *bestByYear[2022 - 1900] = {NULL};
 
     while (head != NULL) {
         int index = head->data.year - 1900;
-
+        // Setting comparison to update head node. If null or rating > current date, update
         if (bestByYear[index] == NULL || head->data.rating > bestByYear[index]->data.rating) {
             bestByYear[index] = head;
         }
-
+        // Updating head node (linked list)
         head = head->next;
     }
 
@@ -75,20 +79,24 @@ void showHighestRatedByYear(struct movieNode *head) {
     }
 }
 
-void showMoviesByLanguage(struct movieNode *head, const char *language) {
+// Definition to set up showing movies by language option
+void displayByLanguage(struct movieNode *head, const char *language) {
     int found = 0;
-
+    // Setting up while loop
     while (head != NULL) {
+        // Language max is 5, increment/move to next language
         for (int i = 0; i < 5; i++) {
+            // Setting parameters to compare and show languages for movie in particular year
             if (strcmp(head->data.languages[i], language) == 0) {
                 printf("%d %s\n", head->data.year, head->data.name);
                 found = 1;
-                break;  // No need to check other languages for this movie
+                break; 
             }
         }
+        // Update head to be next node (linked list)
         head = head->next;
     }
-
+    // Message printed if no movies found for input
     if (!found) {
         printf("No data about movies released in %s\n", language);
     }
@@ -158,39 +166,45 @@ int main(int argc, char *argv[]) {
     int inputNum;
 
     do {
+        // Print messages displaying options to user
         printf("\n1. Show movies released in the specified year\n");
         printf("2. Show highest rated movie for each year\n");
         printf("3. Show movies and their year of release for a specific language\n");
         printf("4. Exit\n");
 
+        // Entering input to select desired choice
         printf("Enter your choice: ");
         scanf("%d", &inputNum);
 
+        // Selecting option 1, setting up to call defintion
         if (inputNum == 1) {
             int year;
             printf("Enter the year: ");
             scanf("%d", &year);
-            showMoviesByYear(head, year);
+            displayMoviesYear(head, year);
 
-
+        // Selecting option 2, setting up to call defintion
         } else if (inputNum == 2) {
-            showHighestRatedByYear(head);
+            displayRatingYear(head);
 
+        // Selecting option 3, setting up to call defintion
         } else if (inputNum == 3) {
             char language[20];
             printf("Enter the language: ");
             scanf("%s", language);
-            showMoviesByLanguage(head, language);
-
+            displayByLanguage(head, language);
+        
+        // Option 4, to exit
         } else if (inputNum == 4) {
             break;
+        // Incorrect choice handling
         } else {
             printf("You entered an incorrect choice. Try again.\n");
         }
 
     } while (inputNum != 4);
 
-    // Free up linked list memory
+    // Freeing up linked list memory
     struct movieNode *curr = head;
     while (curr != NULL) {
         struct movieNode *temp = curr;
